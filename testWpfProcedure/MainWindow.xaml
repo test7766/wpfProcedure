@@ -1,0 +1,168 @@
+﻿<Window x:Class="testWpfProcedure.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    
+ 
+    <Window.Resources>
+        <DataTemplate x:Key="Doc_TypeHeaderTemplate">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Тип документу" />
+                <dxe:TextEdit x:Name="Doc_Type" KeyDown="FilterTextEdit_KeyDown" Text="{Binding DocType, Mode=TwoWay}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Doc_CoHeaderTemplate">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Компанія документу" />
+                <dxe:TextEdit x:Name="Doc_Co" KeyDown="FilterTextEdit_KeyDown2" Text="{Binding DocCo, Mode=TwoWay}"  PreviewKeyDown="Doc_Co_PreviewKeyDown" />
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+
+
+
+    <Window.CommandBindings>
+        <!--<CommandBinding x:Name="Refresh" Command="Refresh" CanExecute="Refresh_CanExecute" Executed="Refresh_Executed" />-->
+        <!--<CommandBinding x:Name="ExportFindRestOfItems" Command="{x:Static cmd:ActionCommands.ExportCommand}" CanExecute="ExportSelectFindRestOfItems_CanExecute" Executed="ExportSelectFindRestOfItems_Executed" />-->
+        <!--<CommandBinding Command="SaveAs" x:Name="SaveAsCommand" CanExecute="SaveAsCommand_CanExecute" Executed="SaveAsCommand_Executed"/>-->
+    </Window.CommandBindings>
+
+
+
+
+    <dx:LoadingDecorator Name="FindRestOfItemLoadingDecorator" IsSplashScreenShown="False" SplashScreenLocation="CenterWindow">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <dxdo:DockLayoutManager >
+                
+                
+                
+                <dxdo:LayoutGroup Grid.Row="0" Orientation="Vertical">
+                   
+                    <dxdo:LayoutPanel ShowCaption="False" Caption="Параметри пошуку руху по залишкам"  ShowCloseButton="False" ShowPinButton="False" AllowMove="False" AllowFloat="False">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <dxb:ToolBarControl BarItemDisplayMode="ContentAndGlyph" UseWholeRow="True" ShowDragWidget="False" 
+                                                AllowCustomizationMenu="False" AllowHide="False" AllowQuickCustomization="False">
+                                <dxb:BarButtonItem Content="Очистити"  Glyph="{dx:DXImage Image=ClearTableStyle_16x16.png}" 
+                                                        LargeGlyph="{dx:DXImage Image=ClearTableStyle_32x32.png}" 
+                                                        RibbonStyle="Default" GlyphAlignment="Left"/>
+                                <dxb:BarButtonItem x:Name="BTN_Search_REST" Content="Пошук" BarItemDisplayMode="ContentAndGlyph"  
+                                                         LargeGlyph="{dx:DXImage Image=Find_32x32.png}" 
+                                                        Glyph="{dx:DXImage Image=Find_16x16.png}"/>
+                                <dxb:BarButtonItem Content="Експорт" Name="btnExportDetails" ToolTip="Зберегти переміщення в файл XLS" 
+                                                         Glyph="{dx:DXImage Image=ExportToXLS_16x16.png}"
+                                                        LargeGlyph="{dx:DXImage Image=ExportToXLS_32x32.png}"/>
+                            </dxb:ToolBarControl>
+                            <dxdo:LayoutGroup x:Name="criteriaGroups" Grid.Row="1" Orientation="Horizontal" >
+                                <dxdo:LayoutGroup Visibility="Visible" Caption="По соглашениям" Orientation="Vertical">
+                                    <dxdo:LayoutGroup Orientation="Horizontal" ShowCaption="False" ItemHeight="Auto" >
+                                        <dxdo:LayoutControlItem Caption="Склад" ItemHeight="Auto" ItemWidth="50*">
+                                            <dxe:TextEdit x:Name="txtEditMCU" IsReadOnly="True" />
+                                        </dxdo:LayoutControlItem>
+                                        <dxdo:LayoutControlItem Caption="Код товару" ItemHeight="Auto" ItemWidth="50*">
+                                            <dxe:TextEdit x:Name="txtEditITM" IsReadOnly="True"  />
+                                        </dxdo:LayoutControlItem>
+                                    </dxdo:LayoutGroup>
+                                    <dxdo:LayoutGroup Orientation="Horizontal" ShowCaption="False" ItemHeight="Auto">
+                                        <dxdo:LayoutControlItem Caption="Місце" ItemHeight="Auto" ItemWidth="50*">
+                                            <dxe:TextEdit  x:Name="txteditLOCN" />
+                                        </dxdo:LayoutControlItem>
+                                        <dxdo:LayoutControlItem Caption="Партія" ItemHeight="Auto" ItemWidth="50*">
+                                            <dxe:TextEdit x:Name="txtEditLOTN"  />
+                                        </dxdo:LayoutControlItem>
+                                    </dxdo:LayoutGroup>
+                                </dxdo:LayoutGroup>
+                            </dxdo:LayoutGroup>
+                        </Grid>
+                    </dxdo:LayoutPanel>
+
+
+                    
+                </dxdo:LayoutGroup>
+                
+            </dxdo:DockLayoutManager>
+
+
+            <Grid Grid.Row="1">
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" >
+                    <dxdo:LayoutGroup Orientation="Horizontal" ShowCaption="False" ItemHeight="Auto">
+
+                    </dxdo:LayoutGroup>
+
+                    <!--<Label x:Name="pageInfoText" VerticalAlignment="Center" Margin="5,0" />-->
+                    <dxb:ToolBarControl BarItemDisplayMode="ContentAndGlyph" UseWholeRow="True" ShowDragWidget="False" AllowCustomizationMenu="False" AllowHide="False" AllowQuickCustomization="False" >
+                        <dxb:BarButtonItem x:Name="showAllNotAll"  Glyph="{dx:DXImage Image=GridHorizontalLines_16x16.png}" RibbonStyle="Default" GlyphAlignment="Left"  Content="показати весь список"/>
+                        <dxb:BarButtonItem   Glyph="{dx:DXImage Image=DoublePrev_16x16.png}" RibbonStyle="Default" GlyphAlignment="Left" />
+                        <dxb:BarButtonItem   Glyph="{dx:DXImage Image=Prev_16x16.png}" RibbonStyle="Default" GlyphAlignment="Left"  />
+                        <dxb:BarButtonItem   Glyph="{dx:DXImage Image=Next_16x16.png}" RibbonStyle="Default" GlyphAlignment="Left" />
+                        <dxb:BarButtonItem   Glyph="{dx:DXImage Image=DoubleNext_16x16.png}" RibbonStyle="Default" GlyphAlignment="Left"  />
+                    </dxb:ToolBarControl>
+                    <TextBlock x:Name="pageInfoText" VerticalAlignment="Center" Margin="5,0" />
+                </StackPanel>
+            </Grid>
+
+
+
+
+
+            <dxg:GridControl Grid.Row="3" x:Name="ItemsMoveRest" 
+                         Uid="55B558D8-70B2-47E7-9527-DF3C48759AC0"
+                         
+                         ClipboardCopyMode="ExcludeHeader">
+                <dxg:GridControl.View>
+                    <dxg:TableView ShowAutoFilterRow="True"
+                               ShowGroupPanel="False"
+                               AllowEditing="False"
+                               BestFitMode="Default"
+                               AllowBestFit="True"
+                               AutoWidth="False"
+                               ShowDataNavigator="True"/>
+                </dxg:GridControl.View>
+                <dxg:GridControl.Columns>
+
+                    <dxg:GridColumn Header="Тип документу" FieldName="Doc_Type" HeaderTemplate="{StaticResource Doc_TypeHeaderTemplate}">
+
+                    </dxg:GridColumn>
+
+                    <dxg:GridColumn Header="Тип документу" FieldName="Doc_Type" HeaderTemplate="{StaticResource Doc_CoHeaderTemplate}">
+
+                    </dxg:GridColumn>
+
+                    <!--<dxg:GridColumn Header="Компанія документу" FieldName="Doc_Co" x:Name="GridColumnDoc_Co">
+                        <dxg:GridColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Компанія документу" />
+                                    <dxe:TextEdit x:Name="Doc_Co" KeyDown="FilterTextEdit_KeyDown" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </dxg:GridColumn.HeaderTemplate>
+                    </dxg:GridColumn>-->
+
+                </dxg:GridControl.Columns>
+            </dxg:GridControl>
+
+
+
+        </Grid>
+    </dx:LoadingDecorator>
+</Window>
