@@ -358,3 +358,4 @@ C:\proj\wpfProcedure\testWpfProcedure\obj\Debug\testWpfProcedure.csproj.CopyComp
 C:\proj\wpfProcedure\testWpfProcedure\obj\Debug\testWpfProcedure.exe
 C:\proj\wpfProcedure\testWpfProcedure\obj\Debug\testWpfProcedure.pdb
 C:\proj\wpfProcedure\testWpfProcedure\obj\Debug\testWpfProcedure.csprojAssemblyReference.cache
+C:\proj\wpfProcedure\testWpfProcedure\obj\Debug\ResourceGrid.baml

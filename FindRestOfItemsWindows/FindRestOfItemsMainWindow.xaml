@@ -1,0 +1,333 @@
+﻿<Window x:Class="Optimapharm.PSC.PurchasingManager.Windows.FindRestOfItemsWindows.FindRestOfItemsMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+        xmlns:cmd="clr-namespace:Optimapharm.PSC.Core.Commands;assembly=Optimapharm.PSC.Core"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        xmlns:grd="clr-namespace:Optimapharm.PSC.Core.Classes.UI;assembly=Optimapharm.PSC.Core"
+        xmlns:local="clr-namespace:Optimapharm.PSC.PurchasingManager.Windows.FindRestOfItemsWindows.ClassHelper"
+        Name="FindRestOfItemsMain"
+        mc:Ignorable="d"
+        Title="FindRestOfItemsMainWindow" Height="450" Width="800">
+    <Window.CommandBindings>
+        <CommandBinding x:Name="ExportFindRestOfItems" Command="{x:Static cmd:ActionCommands.ExportCommand}" CanExecute="ExportSelectFindRestOfItems_CanExecute" Executed="ExportSelectFindRestOfItems_Executed" />
+    </Window.CommandBindings>
+
+    <Window.Resources>
+
+        <local:DependencyPropertyClass x:Key="KeyDependency"/>
+      
+        <DataTemplate  x:Key="Document_NumberHeaderTemplate" >
+            <StackPanel Orientation="Vertical"  Margin="-4 0 0 0" Width="100" >
+                <TextBlock Text="{Binding}" TextAlignment="Center" />
+                <dxe:ButtonEdit x:Name="Document_Number"  Width="auto" KeyDown="ButtonEdit_KeyDown"  NullText="" ShowNullText="True" 
+                                NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                EditValue="{Binding Path=Document_Number, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Doc_TypeHeaderTemplate" >
+            <StackPanel Orientation="Vertical"   Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center" />
+                <dxe:ButtonEdit x:Name="Doc_Type" Width="auto"   KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=Doc_Type, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Doc_CoHeaderTemplate" >
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center"  />
+                <dxe:ButtonEdit x:Name="Doc_Co"  Width="auto"  KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False" 
+                                                        EditValue="{Binding Path=Doc_Co, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Transaction_DateHeaderTemplate" >
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center" />
+                <dxe:DateEdit x:Name="Transaction_Date"  MaskType="DateTime" Mask="dd.MM.yyyy" Width="auto" KeyDown="ButtonEdit_KeyDown" 
+                                                        EditValue="{Binding Path=Transaction_Date, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate  x:Key="Branch_PlantHeaderTemplate" >
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center"/>
+                <dxe:ButtonEdit x:Name="Branch_Plant"  Width="auto" KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False" 
+                                                        EditValue="{Binding Path=Branch_Plant, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="QuantityHeaderTemplate">
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center" />
+                <dxe:ButtonEdit x:Name="Quantity"  Width="auto" KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False" 
+                                                        EditValue="{Binding Path=Quantity, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Trans_UoMHeaderTemplate">
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center"  />
+                <dxe:ButtonEdit x:Name="Trans_UoM"  Width="auto" KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=Trans_UoM, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Unit_CostHeaderTemplate" >
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center"/>
+                <dxe:ButtonEdit x:Name="Unit_Cost"  Width="auto"  KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=Unit_Cost, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Lot_SerialHeaderTemplate">
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}"  TextAlignment="Center" />
+                <dxe:ButtonEdit x:Name="Lot_Serial"  Width="auto"  KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=Lot_Serial, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="LocationHeaderTemplate" >
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center"/>
+                <dxe:ButtonEdit x:Name="Location"  Width="auto"  KeyDown="ButtonEdit_KeyDown"
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=Location, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Lot_Status_CodeHeaderTemplate">
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center" />
+                <dxe:ButtonEdit x:Name="Lot_Status_Code"  Width="auto"  KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False" 
+                                                        EditValue="{Binding Path=Lot_Status_Code, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Order_NumberHeaderTemplate">
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center"/>
+                <dxe:ButtonEdit x:Name="Order_Number"   Width="auto"  KeyDown="ButtonEdit_KeyDown"
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=Order_Number, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Order_TyHeaderTemplate">
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}"  TextAlignment="Center"/>
+                <dxe:ButtonEdit x:Name="Order_Ty"  Width="auto"  KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=Order_Ty, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="Order_CoHeaderTemplate" >
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center"/>
+                <dxe:ButtonEdit x:Name="Order_Co" Width="auto"  KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=Order_Co, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate  x:Key="LineNumHeaderTemplate" >
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}"  TextAlignment="Center"/>
+                <dxe:ButtonEdit x:Name="LineNum"  Width="auto"  KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=LineNum, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate  x:Key="Class_CodeHeaderTemplate" >
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}"  TextAlignment="Center"/>
+                <dxe:ButtonEdit x:Name="Class_Code"  Width="auto"  KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=Class_Code, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate  x:Key="GL_DateHeaderTemplate" >
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center" />
+                <dxe:DateEdit x:Name="GL_Date"  MaskType="DateTime" Mask="dd.MM.yyyy" Width="auto" KeyDown="ButtonEdit_KeyDown"
+                                                        EditValue="{Binding Path=GL_Date, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate  x:Key="Supplier_Lot_NumberHeaderTemplate" >
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}"  TextAlignment="Center"/>
+                <dxe:ButtonEdit x:Name="Supplier_Lot_Number"  Width="auto"  KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=Supplier_Lot_Number, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="TrexrHeaderTemplate">
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}" TextAlignment="Center" />
+                <dxe:ButtonEdit x:Name="Trex"   Width="auto"  KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=Trex, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="FTHeaderTemplate">
+            <StackPanel Orientation="Vertical" Margin="-4 0 0 0" Width="100">
+                <TextBlock Text="{Binding}"  TextAlignment="Center"/>
+                <dxe:ButtonEdit x:Name="FT"  Width="auto"  KeyDown="ButtonEdit_KeyDown" 
+                                                        NullText="" ShowNullText="True" NullValueButtonPlacement="EditBox"  AllowDefaultButton="False"
+                                                        EditValue="{Binding Path=FT, Source={StaticResource KeyDependency },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <!--<ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ResourceFindRestOfItemsWindows/ResourceDataGrid.xaml"/>
+
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>-->
+    </Window.Resources>
+
+
+    <dx:LoadingDecorator Name="FindRestOfItemLoadingDecorator" IsSplashScreenShown="False" SplashScreenLocation="CenterWindow">
+
+        <Grid ShowGridLines="False" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <dxdo:DockLayoutManager>
+                <dxdo:LayoutGroup Grid.Row="0" Orientation="Vertical">
+                    <dxdo:LayoutPanel ShowCaption="False" Caption="Параметри пошуку руху по залишкам"  ShowCloseButton="False" ShowPinButton="False" AllowMove="False" AllowFloat="False">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <dxb:ToolBarControl BarItemDisplayMode="ContentAndGlyph" UseWholeRow="True" ShowDragWidget="False" 
+                                                AllowCustomizationMenu="False" AllowHide="False" AllowQuickCustomization="False">
+                                <dxb:BarButtonItem Content="Очистити"  Glyph="{dx:DXImage Image=ClearTableStyle_16x16.png}" 
+                                                   LargeGlyph="{dx:DXImage Image=ClearTableStyle_32x32.png}" 
+                                                   RibbonStyle="Default" GlyphAlignment="Left"
+                                                   ItemClick="BTN_Clear_TableeResult_Click"/>
+                                <dxb:BarButtonItem x:Name="BTN_Search_REST" Content="Пошук" BarItemDisplayMode="ContentAndGlyph"  
+                                           ItemClick="BTN_Search_History_Of_Remnants_Click" LargeGlyph="{dx:DXImage Image=Find_32x32.png}" Glyph="{dx:DXImage Image=Find_16x16.png}"/>
+
+                                <dxb:BarButtonItem Content="Експорт" Name="btnExportDetails" ToolTip="Зберегти переміщення в файл XLS" Command="{x:Static cmd:ActionCommands.ExportCommand}"
+                                               Glyph="{dx:DXImage Image=ExportToXLS_16x16.png}" LargeGlyph="{dx:DXImage Image=ExportToXLS_32x32.png}"/>
+
+                            </dxb:ToolBarControl>
+
+
+
+                            <dxdo:LayoutGroup x:Name="criteriaGroups" Grid.Row="1" Orientation="Horizontal" >
+
+                                <dxdo:LayoutGroup Visibility="Visible" Caption="По соглашениям" Orientation="Vertical">
+
+                                    <dxdo:LayoutGroup Orientation="Horizontal" ShowCaption="False" ItemHeight="Auto" >
+
+                                        <dxdo:LayoutControlItem Caption="Склад" ItemHeight="Auto" ItemWidth="50*">
+                                            <dxe:TextEdit x:Name="txtEditMCU" IsReadOnly="True" />
+                                        </dxdo:LayoutControlItem>
+
+                                        <dxdo:LayoutControlItem Caption="Код товару" ItemHeight="Auto" ItemWidth="50*">
+                                            <dxe:TextEdit x:Name="txtEditITM" IsReadOnly="True"  />
+                                        </dxdo:LayoutControlItem>
+
+                                    </dxdo:LayoutGroup>
+
+                                    <dxdo:LayoutGroup Orientation="Horizontal" ShowCaption="False" ItemHeight="Auto">
+                                        <dxdo:LayoutControlItem Caption="Місце" ItemHeight="Auto" ItemWidth="50*">
+                                            <dxe:TextEdit  x:Name="txteditLOCN" />
+                                        </dxdo:LayoutControlItem>
+                                        <dxdo:LayoutControlItem Caption="Партія" ItemHeight="Auto" ItemWidth="50*">
+                                            <dxe:TextEdit x:Name="txtEditLOTN"  />
+                                        </dxdo:LayoutControlItem>
+                                    </dxdo:LayoutGroup>
+                                </dxdo:LayoutGroup>
+                            </dxdo:LayoutGroup>
+                        </Grid>
+                    </dxdo:LayoutPanel>
+                </dxdo:LayoutGroup>
+            </dxdo:DockLayoutManager>
+
+
+            <Grid Grid.Row="1" x:Name="PanelFiltrPagination" IsEnabled="False">
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" >
+                    <!--UpdateSourceTrigger=PropertyChanged когда пользователь жмет на клавишу и каждій ситмвол вносится в переменную-->
+                    <!--<dxe:TextEdit Mask="T" MaskUseAsDisplayFormat="True" NullText="Обязательное заполнение" FontWeight="Normal"
+                                      EditValue="{Binding ElementName=FindRestOfItemsMain, Path=NecessaryField, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                                      MaskType="DateTimeAdvancingCaret" MaskIgnoreBlank="False" MaskCulture="ru-RU" AllowNullInput="True"/>-->
+
+                    <dxe:CheckEdit x:Name="CheckMax" IsChecked="False" EditValueChanged="CheckMax_EditValueChanged_1" Margin="0 0 5 0">max</dxe:CheckEdit >
+                    <dxe:SpinEdit x:Name="SplitEdita" EditValue="5" Increment="1" MinValue="5" MaxValue="50" AllowSpinOnMouseWheel="False"  />
+                    <dxb:ToolBarControl BarItemDisplayMode="ContentAndGlyph" UseWholeRow="True" ShowDragWidget="False" AllowCustomizationMenu="False" AllowHide="False" AllowQuickCustomization="False">
+                        <dxb:BarButtonItem x:Name="ShowUsercount"    Glyph="{dx:DXImage Image=Apply_16x16.png}" RibbonStyle="Default" GlyphAlignment="Left" ItemClick="ShowUsercount_ItemClick" Content=""/>
+                        <dxb:BarButtonItem x:Name="ResetUserSearch"    Glyph="{dx:DXImage Image=ResetModelDifferences_16x16.png}" 
+                                           RibbonStyle="Default" GlyphAlignment="Left" ItemClick="ResetUserSearch_ItemClick" Content="скинути пошук"/>
+                    </dxb:ToolBarControl>
+
+                    <dxdo:LayoutGroup Orientation="Horizontal" ShowCaption="False" ItemHeight="Auto">
+                    </dxdo:LayoutGroup>
+                    <dxb:ToolBarControl x:Name="tolbarArrow" BarItemDisplayMode="ContentAndGlyph" UseWholeRow="True" ShowDragWidget="False" AllowCustomizationMenu="False" AllowHide="False" AllowQuickCustomization="False" >
+                        <dxb:BarButtonItem  x:Name="BTN_Home_Name"   Glyph="{dx:DXImage Image=DoublePrev_16x16.png}" RibbonStyle="Default" GlyphAlignment="Left" ItemClick="BTN_Home_Click" IsEnabled="False"/>
+                            <dxb:BarButtonItem  x:Name="BTN_Previous_Name"   Glyph="{dx:DXImage Image=Prev_16x16.png}" RibbonStyle="Default" GlyphAlignment="Left" ItemClick="BTN_Previous_Click" IsEnabled="False" />
+                            <dxb:BarButtonItem  x:Name="BTN_Next_Name"   Glyph="{dx:DXImage Image=Next_16x16.png}" RibbonStyle="Default" GlyphAlignment="Left" ItemClick="BTN_Next_Click"  />
+                        <dxb:BarButtonItem  x:Name="BTN_End_Name" Glyph="{dx:DXImage Image=DoubleNext_16x16.png}" RibbonStyle="Default" GlyphAlignment="Left" ItemClick="BTN_End_Click" />
+                    </dxb:ToolBarControl>
+                    <TextBlock x:Name="pageInfoText" VerticalAlignment="Center" Margin="5,0" />
+                    
+                </StackPanel>
+            </Grid>
+
+
+
+
+
+
+            <dxdo:LayoutPanel Grid.Row="3" ShowCaption="false" Caption="Склад"  ItemHeight="65*"  ShowCloseButton="False" ShowPinButton="False" >
+                <grd:GridControlExt x:Name="ItemsMoveRest"  Uid="55B558D8-70B2-47E7-9527-DF3C48759AC0" dx:ScrollBarExtensions.ScrollBarMode="TouchOverlap" ClipboardCopyMode="ExcludeHeader" IsEnabled="True" AllowMRUFilterList="False" AllowColumnMRUFilterList="False" IsFilterEnabled="False">
+                    <dxg:GridControl.View>
+                        <dxg:TableView  ShowAutoFilterRow="False" 
+                                    AllowSorting="False"  
+                                    ShowGroupPanel="False" 
+                                    AllowEditing="False" 
+                                    BestFitMode="Default" 
+                                    AllowBestFit="True" 
+                                        
+                                    AutoWidth="False"
+                                    ShowDataNavigator="True" AllowColumnFiltering="False" AllowFilterEditor="False"/>
+                    </dxg:GridControl.View>
+                    <dxg:GridControl.Columns  >
+                        <dxg:GridColumn Header="Номер документу" FieldName="Document_Number" x:Name="Document_Number" HeaderTemplate="{StaticResource Document_NumberHeaderTemplate}" SortOrder="Ascending" SortIndex="0" />
+                        <dxg:GridColumn Header="Тип документу" FieldName="Doc_Type" x:Name="Doc_Type" HeaderTemplate="{StaticResource Doc_TypeHeaderTemplate}" />
+                        <dxg:GridColumn Header="Компанія документу" FieldName="Doc_Co" HeaderTemplate="{StaticResource Doc_CoHeaderTemplate }" />
+                        <dxg:GridColumn Header="Дата операції" FieldName="Transaction_Date" HeaderTemplate="{StaticResource Transaction_DateHeaderTemplate}"/>
+                        <dxg:GridColumn Header="Код складу" FieldName="Branch_Plant" HeaderTemplate="{StaticResource Branch_PlantHeaderTemplate}"/>
+                        <dxg:GridColumn Header="Кількість" FieldName="Quantity" HeaderTemplate="{StaticResource QuantityHeaderTemplate}"/>
+                        <dxg:GridColumn Header="Од. виміру" FieldName="Trans_UoM" HeaderTemplate="{StaticResource Trans_UoMHeaderTemplate}"/>
+                        <dxg:GridColumn Header="Вартість, грн" FieldName="Unit_Cost" HeaderTemplate="{StaticResource Unit_CostHeaderTemplate}"/>
+                        <dxg:GridColumn Header="Партія" FieldName="Lot_Serial" HeaderTemplate="{StaticResource Lot_SerialHeaderTemplate}"/>
+                        <dxg:GridColumn Header="Місце" FieldName="Location" HeaderTemplate="{StaticResource LocationHeaderTemplate}" />
+                        <dxg:GridColumn Header="Код статусу партії" FieldName="Lot_Status_Code"  HeaderTemplate="{StaticResource Lot_Status_CodeHeaderTemplate}" />
+                        <dxg:GridColumn Header="Номер замовлення" FieldName="Order_Number" HeaderTemplate="{StaticResource Lot_Status_CodeHeaderTemplate}"/>
+                        <dxg:GridColumn Header="Тип замовлення" FieldName="Order_Ty" HeaderTemplate="{StaticResource Order_TyHeaderTemplate}"/>
+                        <dxg:GridColumn Header="Компанія замовлення" FieldName="Order_Co" HeaderTemplate="{StaticResource Order_CoHeaderTemplate}"/>
+                        <dxg:GridColumn Header="Номер рядка" FieldName="LineNum" HeaderTemplate="{StaticResource LineNumHeaderTemplate}"/>
+                        <dxg:GridColumn Header="Клас ГК" FieldName="Class_Code" HeaderTemplate="{StaticResource Class_CodeHeaderTemplate}" />
+                        <dxg:GridColumn Header="Дата ГК" FieldName="GL_Date" HeaderTemplate="{StaticResource GL_DateHeaderTemplate}"/>
+                        <dxg:GridColumn Header="Серія" FieldName="Supplier_Lot_Number" HeaderTemplate="{StaticResource Supplier_Lot_NumberHeaderTemplate}" />
+                        <dxg:GridColumn Header="Опис операції" FieldName="Trex" HeaderTemplate="{StaticResource TrexrHeaderTemplate}" />
+                        <dxg:GridColumn Header="З/на" FieldName="FT" HeaderTemplate="{StaticResource FTHeaderTemplate}" />
+                    </dxg:GridControl.Columns>
+                </grd:GridControlExt>
+            </dxdo:LayoutPanel>
+        </Grid>
+    </dx:LoadingDecorator>
+</Window>

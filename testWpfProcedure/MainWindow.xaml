@@ -11,22 +11,17 @@
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    
- 
-    <Window.Resources>
-        <DataTemplate x:Key="Doc_TypeHeaderTemplate">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="Тип документу" />
-                <dxe:TextEdit x:Name="Doc_Type" KeyDown="FilterTextEdit_KeyDown" Text="{Binding DocType, Mode=TwoWay}"/>
-            </StackPanel>
-        </DataTemplate>
 
-        <DataTemplate x:Key="Doc_CoHeaderTemplate">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="Компанія документу" />
-                <dxe:TextEdit x:Name="Doc_Co" KeyDown="FilterTextEdit_KeyDown2" Text="{Binding DocCo, Mode=TwoWay}"  PreviewKeyDown="Doc_Co_PreviewKeyDown" />
-            </StackPanel>
-        </DataTemplate>
+  
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ResourceGrid.xaml"/>
+                
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+      
     </Window.Resources>
 
 
